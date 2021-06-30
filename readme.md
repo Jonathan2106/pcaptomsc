@@ -7,6 +7,9 @@ converting wireshark packet capture (pcap) into message sequence chart for seque
 - python 3.3
 - mscgen (optional, for convering to image files)
 
+## Installation
+`git clone https://github.com/Jonathan2106/pcaptomsc.git pcaptomsc`
+
 ## Usage
 - `python pcaptomsc.py -f <format> -i <pcap_file_input> -o <text_file_output>`
 

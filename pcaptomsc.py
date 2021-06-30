@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
+    pcaptomsc
+    ~~~~~~~~~~~~~~~~~~~~
+    converting wireshark packet capture (pcap) into message sequence chart for sequencediagram.net, hackmd.io, or mscgen (png, svg, and eps format).
 
+    See the README file for details.
+    :author: Jonathan <m10802821@gapps.ntust.edu.tw>.
+    :license: MIT, see LICENSE for details.
 """
 import sys
 import getopt

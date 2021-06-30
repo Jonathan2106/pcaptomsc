@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
+    mscgenhandler
     ~~~~~~~~~~~~~~~~~~~~
     handling mscgen to generate msc in image format
 
     See the README file for details.
     :author: Jonathan <m10802821@gapps.ntust.edu.tw>.
-    :license: TBD, see LICENSE for details.
+    :license: MIT, see LICENSE for details.
 """
 
 import sys
