@@ -22,7 +22,8 @@ def mscgenhandler(format, textinput, imageoutput):
 
     # calling mscgen
     pipe = Popen("mscgen -T "+ format + " -i " + textinput + " -o " + imageoutput, stdout=PIPE)
-    ret = str(pipe.communicate()[0],'utf-8')
+    ret = pipe.communicate()
+    ret = str(ret[0],'utf-8')
 
     if ret == '':
         return 0

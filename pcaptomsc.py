@@ -16,11 +16,30 @@ from tshark import tshark
 import pcaptolist
 import mscgenhandler
 
+def replacestrings(text):
+    string_to_replace = [
+        ["\"", "\\\""],
+        ["→", "->"]
+    ]
+
+    ret = text
+
+    for strings in string_to_replace:
+        ret = ret.replace(strings[0], strings[1])
+
+    return ret
+
 def listtomscgenformat(list_of_el):
     ret = ""
     ret += "msc {\n\n"
 
-    actors = list(set([el["source"] for el in list_of_el] + [el["destination"] for el in list_of_el]))
+    list_of_actors = []
+    for el in list_of_el:
+        list_of_actors.append(el["source"])
+        list_of_actors.append(el["destination"]) 
+
+    # actors = list(set(list_of_actors)) -> can't maintain order
+    actors = list(dict.fromkeys(list_of_actors))
 
     ret += "  \"" + "\", \"".join(actors) + "\";\n"
 
@@ -30,7 +49,7 @@ def listtomscgenformat(list_of_el):
 
         # concat the text
         ret += ("  \"" + current_el["source"]+ "\"=>\""+ current_el["destination"]
-                + "\" [label=\""+ current_el["protocol"] + "\"];\n")           
+                + "\" [label=\"("+ current_el["protocol"] +")  " + replacestrings(current_el["info"]) + "\"];\n")           
 
     ret += "}"
 
@@ -132,13 +151,13 @@ def main(argv):
 
     ## output
     if txt_output == True:
-        f = open(output_file, "wt")
+        f = open(output_file, "wt", encoding='utf-8')
         f.write(output)
         f.close()
         print("text file generated : ", output_file)
     if image_output == True:
         mscgen_output_file = image_output_file[:-4] + ".msc"
-        f = open(mscgen_output_file, "wt")
+        f = open(mscgen_output_file, "wt", encoding='utf-8')
         f.write(output)
         f.close()
         print("mscgen file generated : ", mscgen_output_file)
