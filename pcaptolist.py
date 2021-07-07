@@ -16,19 +16,28 @@ from subprocess import Popen, PIPE
 def pcaptolist(tshark_path, input_file):
     res = []
 
-    pipe = Popen(tshark_path+" -r "+ input_file, stdout=PIPE)
+    pipe = Popen(tshark_path+" -r "+ input_file + " -T tabs", stdout=PIPE)
     text = pipe.communicate()[0]
     
     lists = str(text,'utf-8').split('\r\n')
 
     for i in lists:
-        temp =  i.strip().split()
+        temp =  i.strip().split('\t')
         if len(temp) > 7:
+            source = temp[2].strip()
+            if source == "":
+                source = "-"
+            destination = temp[4].strip()
+            if destination == "":
+                destination = "-"
+            protocol = temp[5].strip()
+            info = " ".join(temp[7:])
+
             el = {
-                "source": temp[2],
-                "destination" : temp[4],
-                "protocol" : temp[5],
-                "info" : " ".join(temp[7:])
+                "source": source,
+                "destination" : destination,
+                "protocol" : protocol,
+                "info" : info
             }
             res.append(el)
 
